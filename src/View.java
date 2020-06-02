@@ -13,7 +13,7 @@ import gnu.io.*;
 import exception.*;
 import java.awt.event.*;
 import socket.SendToWeb;
-import utils.serialPortManager;
+import exception.serialPortManager;
 
 
 /**
@@ -270,7 +270,7 @@ public class View extends JFrame {
                             JOptionPane.showMessageDialog(null, "串口对象为空！监听失败！", "错误", JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             data = serialPortManager.readFromPort(serialPort);    //读取数据，存入字节数组
-                          //  System.out.println("test1");
+                          //  System.out.println("1111111111111111111111111111111111111");
                             System.out.println(new String(data));
                             //自定义解析过程
                             if (data == null || data.length < 1) {
@@ -279,7 +279,7 @@ public class View extends JFrame {
                             } else {
                                 //初始数据是data
                                 String dataOriginal = new String(data);
-                             //   System.out.println("test2");
+                             //   System.out.println("22222222222222222222222222222222222");
                                 System.out.println("原始数据：" + dataOriginal);
 
                                 //把原始数据写入到D盘的txt文件中
@@ -296,6 +296,7 @@ public class View extends JFrame {
                                 String[] elements = null;//保存按空格拆分原始字符串后得到的字符串数组
                                     //            执行到了这里
                                     //解析数据
+
                                 if (dataOriginal.charAt(0) =='S') {//当数据的第一个字符是#号时表示数据接收完成，开始解析
                                     dataValid = dataOriginal.substring(0);
 //                                    String regex="\\D+";
@@ -314,21 +315,21 @@ public class View extends JFrame {
                                             //定义发送到数据库的对象
                                            SendToWeb sendToWeb = new SendToWeb();
                                            String message="";
-                                           //处理心率
-//                                           Integer heartRate = new Integer(elements[2]);
-//                                           if(heartRate<120&&heartRate>40){
-//                                               message=elements[2];
-//                                           }
-//                                           //处理血氧
-//                                            Integer bloodOxygen = new Integer(elements[3]);
-//                                            if(bloodOxygen<120&&bloodOxygen>40){
-//                                                message=elements[2];
-//                                            }
-//                                            //处理温度
-//                                            Float temperature = Float.parseFloat(elements[0]);
-//                                            if(temperature<41&&heartRate>35) {
-//                                                message = elements[2];
-//                                            }
+//                                           处理心率
+                                           Integer heartRate = new Integer(elements[2]);
+                                           if(heartRate<120&&heartRate>40){
+                                               message=elements[2];
+                                           }
+                                           //处理血氧
+                                            Integer bloodOxygen = new Integer(elements[3]);
+                                            if(bloodOxygen<120&&bloodOxygen>40){
+                                                message=elements[2];
+                                            }
+                                            //处理温度
+                                            Float temperature = Float.parseFloat(elements[0]);
+                                            if(temperature<41&&heartRate>35) {
+                                                message = elements[2];
+                                            }
                                             //处理时间
                                             Date nowTime=new Date();
                                             String t1=String.format("%tY-%<tm-%<td-%<tH:%<tM:%<tS",nowTime);
